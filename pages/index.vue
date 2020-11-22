@@ -1,39 +1,42 @@
 <template>
   <div class="container">
     <balance-box
-      :publicBalance="currentMonthPublicBalance"
-      :privateBalance="currentMonthPrivateBalance"
+      :publicBalance="publicBalance"
+      :privateBalance="privateBalance"
     />
-    <div class="columns">
-      <div class="column">
-        <line-chart :height="500" />
-      </div>
-      <div class="column">
-        <line-chart :height="500" />
-      </div>
-    </div>
+    <daily-private-balance-chart
+      :height="300"
+      :baseData="privateDailyPaymentAmounts"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import balanceBox from '~/components/index/balanceBox.vue'
-import LineChart from '~/components/index/lineChart.vue'
+import DailyPrivateBalanceChart from '~/components/index/dailyPrivateBalanceChart.vue'
 
 export default Vue.extend({
-  components: { balanceBox, LineChart },
+  components: { balanceBox, DailyPrivateBalanceChart },
   async asyncData({ app }) {
     const balance = await app.$fire.functions
       .httpsCallable('balance')()
       .then((res) => res.data)
+    const dailyPaymentAmounts = await app.$fire.functions
+      .httpsCallable('dailyPaymentAmounts')()
+      .then((res) => res.data)
     return {
-      currentMonthPrivateBalance: balance.private,
-      currentMonthPublicBalance: balance.public,
+      privateBalance: balance.private,
+      publicBalance: balance.public,
+      privateDailyPaymentAmounts: dailyPaymentAmounts.private,
+      publicDailyPaymentAmounts: dailyPaymentAmounts.public,
     }
   },
   data: () => ({
-    currentMonthPrivateBalance: 0,
-    currentMonthPublicBalance: 0,
+    privateBalance: 0,
+    publicBalance: 0,
+    privateDailyPaymentAmounts: {},
+    publicDailyPaymentAmounts: {},
   }),
 })
 </script>

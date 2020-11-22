@@ -20,16 +20,17 @@
 import dayjs from 'dayjs'
 
 export default {
-  props: {
-    publicBalance: {
-      type: Number,
-      required: true,
-    },
-    privateBalance: {
-      type: Number,
-      required: true,
-    },
+  async fetch() {
+    const balance = await this.$fire.functions
+      .httpsCallable('balance')()
+      .then(res => res.data)
+    this.privateBalance = balance.private
+    this.publicBalance = balance.public
   },
+  data: () => ({
+    privateBalance: 0,
+    publicBalance: 0
+  }),
   computed: {
     formattedDate() {
       return dayjs().format('YYYY年MM月DD日')
@@ -39,8 +40,8 @@ export default {
     },
     publicBudget() {
       return Number(process.env.publicBudget)
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -4,12 +4,15 @@ import dayjs from 'dayjs'
 
 export default {
   extends: Line,
-  props: {
-    baseData: {
-      type: Object, // { '2020-10-10': 1000, '2020-10-11: 2000 }
-      required: true
-    }
+  async fetch() {
+    const baseData = await this.$fire.functions
+      .httpsCallable('dailyPaymentAmounts')({ paymentType: 'private' })
+      .then(res => res.data)
+    this.baseData = baseData
   },
+  data: () => ({
+    baseData: {} // { '2020-10-10': 1000, '2020-10-11: 2000 }
+  }),
   computed: {
     dayLabels() {
       return Object.keys(this.baseData)

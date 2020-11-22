@@ -1,17 +1,8 @@
 <template>
   <div class="container">
-    <balance-box
-      :publicBalance="publicBalance"
-      :privateBalance="privateBalance"
-    />
-    <daily-public-balance-chart
-      :height="300"
-      :baseData="publicDailyPaymentAmounts"
-    />
-    <daily-private-balance-chart
-      :height="300"
-      :baseData="privateDailyPaymentAmounts"
-    />
+    <balance-box :publicBalance="publicBalance" :privateBalance="privateBalance" />
+    <daily-public-balance-chart :height="300" :baseData="publicDailyPaymentAmounts" />
+    <daily-private-balance-chart :height="300" :baseData="privateDailyPaymentAmounts" />
   </div>
 </template>
 
@@ -25,23 +16,23 @@ export default Vue.extend({
   async asyncData({ app }) {
     const balance = await app.$fire.functions
       .httpsCallable('balance')()
-      .then((res) => res.data)
+      .then(res => res.data)
     const dailyPaymentAmounts = await app.$fire.functions
       .httpsCallable('dailyPaymentAmounts')()
-      .then((res) => res.data)
+      .then(res => res.data)
     return {
       privateBalance: balance.private,
       publicBalance: balance.public,
       privateDailyPaymentAmounts: dailyPaymentAmounts.private,
-      publicDailyPaymentAmounts: dailyPaymentAmounts.public,
+      publicDailyPaymentAmounts: dailyPaymentAmounts.public
     }
   },
   data: () => ({
     privateBalance: 0,
     publicBalance: 0,
     privateDailyPaymentAmounts: {},
-    publicDailyPaymentAmounts: {},
-  }),
+    publicDailyPaymentAmounts: {}
+  })
 })
 </script>
 

@@ -23,14 +23,17 @@ export default Vue.extend({
     const balance = await app.$fire.functions
       .httpsCallable('balance')()
       .then(res => res.data)
-    const dailyPaymentAmounts = await app.$fire.functions
-      .httpsCallable('dailyPaymentAmounts')()
+    const privateDailyPaymentAmounts = await app.$fire.functions
+      .httpsCallable('dailyPaymentAmounts')({ paymentType: 'private' })
+      .then(res => res.data)
+    const publicDailyPaymentAmounts = await app.$fire.functions
+      .httpsCallable('dailyPaymentAmounts')({ paymentType: 'public' })
       .then(res => res.data)
     return {
       privateBalance: balance.private,
       publicBalance: balance.public,
-      privateDailyPaymentAmounts: dailyPaymentAmounts.private,
-      publicDailyPaymentAmounts: dailyPaymentAmounts.public
+      privateDailyPaymentAmounts,
+      publicDailyPaymentAmounts
     }
   },
   data: () => ({

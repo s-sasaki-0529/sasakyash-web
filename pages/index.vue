@@ -1,22 +1,11 @@
 <template>
-  <div class="container">{{ message }}</div>
+  <div class="container">Hello, World!!</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({
-  async asyncData({ app }) {
-    const helloWorld = app.$fire.functions.httpsCallable('helloWorld')
-    const message = await helloWorld().then((res) => {
-      return res.data.message
-    })
-    return { message }
-  },
-  data: () => ({
-    message: '',
-  }),
-})
+export default Vue.extend({})
 </script>
 
 <style></style>

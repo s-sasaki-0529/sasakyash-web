@@ -4,8 +4,13 @@
       :publicBalance="currentMonthPublicBalance"
       :privateBalance="currentMonthPrivateBalance"
     />
-    <div class="box">
-      <line-chart :width="200" :height="500" />
+    <div class="columns">
+      <div class="column">
+        <line-chart :height="500" />
+      </div>
+      <div class="column">
+        <line-chart :height="500" />
+      </div>
     </div>
   </div>
 </template>

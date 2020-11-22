@@ -4,15 +4,19 @@
       :publicBalance="currentMonthPublicBalance"
       :privateBalance="currentMonthPrivateBalance"
     />
+    <div class="box">
+      <line-chart :width="200" :height="500" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import balanceBox from '~/components/index/balanceBox.vue'
+import LineChart from '~/components/index/lineChart.vue'
 
 export default Vue.extend({
-  components: { balanceBox },
+  components: { balanceBox, LineChart },
   async asyncData({ app }) {
     const balance = await app.$fire.functions
       .httpsCallable('balance')()
@@ -29,4 +33,4 @@ export default Vue.extend({
 })
 </script>
 
-<style></style>
+<style lang="scss"></style>

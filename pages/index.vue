@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="index">
     <balance-box :publicBalance="publicBalance" :privateBalance="privateBalance" />
     <div class="columns">
       <div class="column">

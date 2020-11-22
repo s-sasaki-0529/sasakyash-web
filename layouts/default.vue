@@ -1,8 +1,8 @@
 <template>
   <section class="section">
-    <div class="default-layout container">
+    <div class="default-layout">
       <div class="columns">
-        <aside class="aside column is-narrow" style="width: 300px">
+        <aside class="aside column is-narrow" style="width: 200px">
           <side-menu />
         </aside>
         <main class="main column">

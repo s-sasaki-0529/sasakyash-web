@@ -7,21 +7,21 @@ export default {
   props: {
     baseData: {
       type: Object, // { '2020-10-10': 1000, '2020-10-11: 2000 }
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     dayLabels() {
       return Object.keys(this.baseData)
     },
     shortDayLabels() {
-      return this.dayLabels.map((dayLabel) => dayjs(dayLabel).date())
+      return this.dayLabels.map(dayLabel => dayjs(dayLabel).date())
     },
     realBalanceValues() {
       const today = dayjs().startOf('day')
       let balance = this.publicBudget
 
-      return this.dayLabels.map((dayLabel) => {
+      return this.dayLabels.map(dayLabel => {
         const day = dayjs(dayLabel)
         if (day <= today) {
           balance -= this.baseData[dayLabel]
@@ -45,27 +45,28 @@ export default {
               fill: true,
               borderColor: 'rgba(239,39,91,0.3)',
               backgroundColor: 'rgba(239,39,91,0.3)',
-            },
-          ],
+              lineTension: false
+            }
+          ]
         },
         options: {
           title: {
             display: true,
-            text: '[公費] 今月の支出状況',
+            text: '[公費] 今月の支出状況'
           },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            xAxes: [{ scaleLabel: { display: true } }],
-            yAxes: [{ ticks: { beginAtZero: false } }],
-          },
-        },
+            xAxes: [{ scaleLabel: { display: true }, ticks: { autoSkip: false } }],
+            yAxes: [{ ticks: { beginAtZero: false } }]
+          }
+        }
       }
-    },
+    }
   },
   mounted() {
     this.renderChart(this.chartData.data, this.chartData.options)
-  },
+  }
 }
 </script>
 

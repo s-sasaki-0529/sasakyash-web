@@ -1,8 +1,14 @@
 <template>
   <div class="container">
     <balance-box :publicBalance="publicBalance" :privateBalance="privateBalance" />
-    <daily-public-balance-chart :height="300" :baseData="publicDailyPaymentAmounts" />
-    <daily-private-balance-chart :height="300" :baseData="privateDailyPaymentAmounts" />
+    <div class="columns">
+      <div class="column">
+        <daily-public-balance-chart :height="500" :baseData="publicDailyPaymentAmounts" />
+      </div>
+      <div class="column">
+        <daily-private-balance-chart :height="500" :baseData="privateDailyPaymentAmounts" />
+      </div>
+    </div>
   </div>
 </template>
 

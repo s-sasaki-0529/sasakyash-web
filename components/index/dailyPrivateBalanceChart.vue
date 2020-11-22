@@ -7,21 +7,21 @@ export default {
   props: {
     baseData: {
       type: Object, // { '2020-10-10': 1000, '2020-10-11: 2000 }
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     dayLabels() {
       return Object.keys(this.baseData)
     },
     shortDayLabels() {
-      return this.dayLabels.map((dayLabel) => dayjs(dayLabel).date())
+      return this.dayLabels.map(dayLabel => dayjs(dayLabel).date())
     },
     realBalanceValues() {
       const today = dayjs().startOf('day')
       let balance = this.privateBudget
 
-      return this.dayLabels.map((dayLabel) => {
+      return this.dayLabels.map(dayLabel => {
         const day = dayjs(dayLabel)
         if (day <= today) {
           balance -= this.baseData[dayLabel]
@@ -34,7 +34,7 @@ export default {
     burndownValues() {
       const dailyBudget = this.privateBudget / this.dayLabels.length
       let balance = this.privateBudget
-      return this.dayLabels.map((v) => {
+      return this.dayLabels.map(v => {
         balance -= dailyBudget
         return balance
       })
@@ -53,32 +53,34 @@ export default {
               fill: true,
               borderColor: 'rgba(130,201,169,0.3)',
               backgroundColor: 'rgba(130,201,169,0.3)',
+              lineTension: false
             },
             {
               label: '理想',
               data: this.burndownValues,
               fill: false,
-            },
-          ],
+              lineTension: false
+            }
+          ]
         },
         options: {
           title: {
             display: true,
-            text: '[私費] 今月の支出状況',
+            text: '[私費] 今月の支出状況'
           },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            xAxes: [{ scaleLabel: { display: true } }],
-            yAxes: [{ ticks: { beginAtZero: true } }],
-          },
-        },
+            xAxes: [{ scaleLabel: { display: true }, ticks: { autoSkip: false } }],
+            yAxes: [{ ticks: { beginAtZero: true } }]
+          }
+        }
       }
-    },
+    }
   },
   mounted() {
     this.renderChart(this.chartData.data, this.chartData.options)
-  },
+  }
 }
 </script>
 

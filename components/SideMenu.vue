@@ -5,22 +5,14 @@
     <p class="menu-label">全般</p>
     <ul class="menu-list">
       <li><a class="is-active">ダッシュボード</a></li>
-      <li><a>サブメニュー</a></li>
-      <li><a>サブメニュー</a></li>
-    </ul>
-
-    <p class="menu-label">集計記録</p>
-    <ul class="menu-list">
-      <li><a>サブメニュー</a></li>
-      <li><a>サブメニュー</a></li>
-      <li><a>サブメニュー</a></li>
+      <li><a>公費分析</a></li>
+      <li><a>私費分析</a></li>
     </ul>
 
     <p class="menu-label">入力補助</p>
     <ul class="menu-list">
-      <li><a>サブメニュー</a></li>
-      <li><a>サブメニュー</a></li>
-      <li><a>サブメニュー</a></li>
+      <li><a>支出入力フォーム</a></li>
+      <li><a>自動入力設定</a></li>
     </ul>
   </div>
 </template>

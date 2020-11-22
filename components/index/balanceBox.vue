@@ -21,11 +21,10 @@ import dayjs from 'dayjs'
 
 export default {
   async fetch() {
-    const balance = await this.$fire.functions
-      .httpsCallable('balance')()
-      .then(res => res.data)
-    this.privateBalance = balance.private
-    this.publicBalance = balance.public
+    const api = this.$fire.functions.httpsCallable('balance')
+    const apiResponse = await api().then(res => res.data)
+    this.privateBalance = apiResponse.private
+    this.publicBalance = apiResponse.public
   },
   data: () => ({
     privateBalance: 0,

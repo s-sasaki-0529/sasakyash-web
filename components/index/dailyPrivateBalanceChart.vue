@@ -5,10 +5,8 @@ import dayjs from 'dayjs'
 export default {
   extends: Line,
   async fetch() {
-    const baseData = await this.$fire.functions
-      .httpsCallable('dailyPaymentAmounts')({ paymentType: 'private' })
-      .then(res => res.data)
-    this.baseData = baseData
+    const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
+    this.baseData = await api({ paymentType: 'private' }).then(res => res.data)
   },
   data: () => ({
     baseData: {} // { '2020-10-10': 1000, '2020-10-11: 2000 }

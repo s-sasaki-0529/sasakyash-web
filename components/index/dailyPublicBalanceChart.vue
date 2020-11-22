@@ -19,7 +19,7 @@ export default {
     },
     realBalanceValues() {
       const today = dayjs().startOf('day')
-      let balance = this.privateBudget
+      let balance = this.publicBudget
 
       return this.dayLabels.map((dayLabel) => {
         const day = dayjs(dayLabel)
@@ -31,16 +31,8 @@ export default {
         }
       })
     },
-    burndownValues() {
-      const dailyBudget = this.privateBudget / this.dayLabels.length
-      let balance = this.privateBudget
-      return this.dayLabels.map((v) => {
-        balance -= dailyBudget
-        return balance
-      })
-    },
-    privateBudget() {
-      return Number(process.env.privateBudget)
+    publicBudget() {
+      return Number(process.env.publicBudget)
     },
     chartData() {
       return {
@@ -51,26 +43,21 @@ export default {
               label: '現実',
               data: this.realBalanceValues,
               fill: true,
-              borderColor: 'rgba(130,201,169,0.3)',
-              backgroundColor: 'rgba(130,201,169,0.3)',
-            },
-            {
-              label: '理想',
-              data: this.burndownValues,
-              fill: false,
+              borderColor: 'rgba(239,39,91,0.3)',
+              backgroundColor: 'rgba(239,39,91,0.3)',
             },
           ],
         },
         options: {
           title: {
             display: true,
-            text: '[私費] 今月の支出状況',
+            text: '[公費] 今月の支出状況',
           },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
             xAxes: [{ scaleLabel: { display: true } }],
-            yAxes: [{ ticks: { beginAtZero: true } }],
+            yAxes: [{ ticks: { beginAtZero: false } }],
           },
         },
       }

@@ -4,6 +4,10 @@
       :publicBalance="publicBalance"
       :privateBalance="privateBalance"
     />
+    <daily-public-balance-chart
+      :height="300"
+      :baseData="publicDailyPaymentAmounts"
+    />
     <daily-private-balance-chart
       :height="300"
       :baseData="privateDailyPaymentAmounts"

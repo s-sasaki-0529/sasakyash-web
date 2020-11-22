@@ -44,4 +44,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.box {
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+</style>

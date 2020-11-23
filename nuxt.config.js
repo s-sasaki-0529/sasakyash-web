@@ -44,6 +44,9 @@ export default {
       '~': path.resolve(__dirname)
     }
   },
+  router: {
+    linkExactActiveClass: 'is-active' // for Bulma sidebar
+  },
   env: {
     privateBudget: process.env.PRIVATE_BUDGET,
     publicBudget: process.env.PUBLIC_BUDGET

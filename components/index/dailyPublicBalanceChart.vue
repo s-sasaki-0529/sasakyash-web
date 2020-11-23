@@ -1,6 +1,7 @@
 <script>
 import { Line } from 'vue-chartjs'
 import dayjs from 'dayjs'
+import { PUBLIC_BUDGET } from '../../commons/constants'
 
 export default {
   extends: Line,
@@ -20,7 +21,7 @@ export default {
     },
     realBalanceValues() {
       const today = dayjs().startOf('day')
-      let balance = this.publicBudget
+      let balance = PUBLIC_BUDGET
 
       return this.dayLabels.map(dayLabel => {
         const day = dayjs(dayLabel)
@@ -31,9 +32,6 @@ export default {
           return null // 未来はグラフに描画しない
         }
       })
-    },
-    publicBudget() {
-      return Number(process.env.publicBudget)
     },
     chartData() {
       return {

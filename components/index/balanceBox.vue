@@ -33,12 +33,6 @@ export default {
   computed: {
     formattedDate() {
       return dayjs().format('YYYY年MM月DD日')
-    },
-    privateBudget() {
-      return Number(process.env.privateBudget)
-    },
-    publicBudget() {
-      return Number(process.env.publicBudget)
     }
   }
 }

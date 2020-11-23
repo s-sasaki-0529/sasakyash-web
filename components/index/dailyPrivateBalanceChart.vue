@@ -7,21 +7,7 @@ export default {
   extends: Line,
   async fetch() {
     const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-    this.baseData = await api({ paymentType: 'private', year: this.year, month: this.month }).then(
-      res => res.data
-    )
-  },
-  props: {
-    year: {
-      type: Number,
-      required: false,
-      default: () => dayjs().year()
-    },
-    month: {
-      type: Number,
-      required: false,
-      default: () => dayjs().month() + 1
-    }
+    this.baseData = await api({ paymentType: 'private' }).then(res => res.data)
   },
   data: () => ({
     baseData: {} // { '2020-10-10': 1000, '2020-10-11: 2000 }

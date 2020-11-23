@@ -1,7 +1,5 @@
 <template>
-  <div class="analytics-private">
-    <daily-private-balance-chart :year="2020" :month="9" :height="500" />
-  </div>
+  <div class="analytics-private">私費詳細分析画面</div>
 </template>
 
 <script>

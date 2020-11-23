@@ -1,10 +1,14 @@
+<template>
+  <balance-chart title="[公費] 今月の支出状況" :labels="shortDayLabels" :dataSets="dataSets" />
+</template>
+
 <script>
-import { Line } from 'vue-chartjs'
-import dayjs from 'dayjs'
+import balanceChart from './balanceChart.vue'
 import { PUBLIC_BUDGET } from '@/commons/constants'
+import dayjs from 'dayjs'
 
 export default {
-  extends: Line,
+  components: { balanceChart },
   async fetch() {
     const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
     this.baseData = await api({ paymentType: 'public' }).then(res => res.data)
@@ -33,41 +37,25 @@ export default {
         }
       })
     },
-    chartData() {
-      return {
-        data: {
-          labels: this.shortDayLabels,
-          datasets: [
-            {
-              label: '現実',
-              data: this.realBalanceValues,
-              fill: true,
-              borderColor: 'rgba(239,39,91,0.3)',
-              backgroundColor: 'rgba(239,39,91,0.3)',
-              lineTension: false
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: true,
-            text: '[公費] 今月の支出状況'
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{ scaleLabel: { display: true }, ticks: { autoSkip: false } }],
-            yAxes: [{ ticks: { beginAtZero: false } }]
-          }
+    burndownValues() {
+      const dailyBudget = PUBLIC_BUDGET / this.dayLabels.length
+      let balance = PUBLIC_BUDGET
+      return this.dayLabels.map(v => {
+        balance -= dailyBudget
+        return balance
+      })
+    },
+    dataSets() {
+      return [
+        {
+          label: '現実',
+          data: this.realBalanceValues,
+          fill: true,
+          borderColor: 'rgba(239,39,91,0.3)',
+          backgroundColor: 'rgba(239,39,91,0.3)',
+          lineTension: false
         }
-      }
-    }
-  },
-  watch: {
-    baseData: {
-      handler() {
-        this.renderChart(this.chartData.data, this.chartData.options)
-      }
+      ]
     }
   }
 }

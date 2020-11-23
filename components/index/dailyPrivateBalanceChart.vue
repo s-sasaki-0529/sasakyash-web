@@ -1,10 +1,14 @@
+<template>
+  <balance-chart title="[私費] 今月の支出状況" :labels="shortDayLabels" :dataSets="dataSets" />
+</template>
+
 <script>
-import { Line } from 'vue-chartjs'
-import dayjs from 'dayjs'
+import balanceChart from './balanceChart.vue'
 import { PRIVATE_BUDGET } from '@/commons/constants'
+import dayjs from 'dayjs'
 
 export default {
-  extends: Line,
+  components: { balanceChart },
   async fetch() {
     const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
     this.baseData = await api({ paymentType: 'private' }).then(res => res.data)
@@ -41,47 +45,23 @@ export default {
         return balance
       })
     },
-    chartData() {
-      return {
-        data: {
-          labels: this.shortDayLabels,
-          datasets: [
-            {
-              label: '現実',
-              data: this.realBalanceValues,
-              fill: true,
-              borderColor: 'rgba(130,201,169,0.3)',
-              backgroundColor: 'rgba(130,201,169,0.3)',
-              lineTension: false
-            },
-            {
-              label: '理想',
-              data: this.burndownValues,
-              fill: false,
-              lineTension: false
-            }
-          ]
+    dataSets() {
+      return [
+        {
+          label: '現実',
+          data: this.realBalanceValues,
+          fill: true,
+          borderColor: 'rgba(130,201,169,0.3)',
+          backgroundColor: 'rgba(130,201,169,0.3)',
+          lineTension: false
         },
-        options: {
-          title: {
-            display: true,
-            text: '[私費] 今月の支出状況'
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{ scaleLabel: { display: true }, ticks: { autoSkip: false } }],
-            yAxes: [{ ticks: { beginAtZero: true } }]
-          }
+        {
+          label: '理想',
+          data: this.burndownValues,
+          fill: false,
+          lineTension: false
         }
-      }
-    }
-  },
-  watch: {
-    baseData: {
-      handler() {
-        this.renderChart(this.chartData.data, this.chartData.options)
-      }
+      ]
     }
   }
 }

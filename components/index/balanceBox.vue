@@ -1,17 +1,12 @@
 <template>
   <div class="balance-box box">
-    <div class="today-label title is-4">{{ formattedDate }}</div>
+    <div class="today-label title is-3">{{ formattedDate }}</div>
     <div class="budget-info">
-      <div class="public">
-        <span>公費 残り</span>
-        <span>{{ publicBalance }}</span>
-        <span>円</span>
-      </div>
-      <div class="public">
-        <span>私費 残り</span>
-        <span>{{ privateBalance }}</span>
-        <span>円</span>
-      </div>
+      <div class="tag is-danger is-medium">公費残額</div>
+      <div class="yen">{{ publicBalance }}円</div>
+
+      <div class="tag is-success is-medium">私費残額</div>
+      <div class="yen">{{ privateBalance }}円</div>
     </div>
   </div>
 </template>
@@ -42,5 +37,16 @@ export default {
 .box {
   box-shadow: none;
   border: 1px solid #ddd;
+  .budget-info {
+    display: flex;
+    align-items: center;
+    div {
+      padding-left: 5px;
+      padding-right: 5px;
+      &.yen {
+        font-size: 1.5em;
+      }
+    }
+  }
 }
 </style>

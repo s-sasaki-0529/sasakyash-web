@@ -13,13 +13,14 @@
 
 <script>
 import dayjs from 'dayjs'
+import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '@/commons/constants'
 
 export default {
   async fetch() {
-    const api = this.$fire.functions.httpsCallable('balance')
+    const api = this.$fire.functions.httpsCallable('monthTotalPaymentAmount')
     const apiResponse = await api().then(res => res.data)
-    this.privateBalance = apiResponse.private
-    this.publicBalance = apiResponse.public
+    this.privateBalance = PRIVATE_BUDGET - apiResponse.private
+    this.publicBalance = PUBLIC_BUDGET - apiResponse.public
   },
   data: () => ({
     privateBalance: 0,

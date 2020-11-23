@@ -1,5 +1,6 @@
 const path = require('path')
 export default {
+  ssr: false,
   head: {
     title: 'sasakyash',
     meta: [

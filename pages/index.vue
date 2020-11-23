@@ -12,14 +12,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import balanceBox from '~/components/index/balanceBox.vue'
-import DailyPrivateBalanceChart from '~/components/index/dailyPrivateBalanceChart.vue'
-
-export default Vue.extend({
-  components: { balanceBox, DailyPrivateBalanceChart }
-})
+<script>
+export default {}
 </script>
 
 <style lang="scss"></style>

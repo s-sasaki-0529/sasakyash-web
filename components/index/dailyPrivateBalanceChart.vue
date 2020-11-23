@@ -1,7 +1,7 @@
 <script>
 import { Line } from 'vue-chartjs'
 import dayjs from 'dayjs'
-import { PRIVATE_BUDGET } from '../../commons/constants'
+import { PRIVATE_BUDGET } from '@/commons/constants'
 
 export default {
   extends: Line,

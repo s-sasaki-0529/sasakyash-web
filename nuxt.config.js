@@ -1,12 +1,13 @@
+const path = require('path')
 export default {
   head: {
     title: 'sasakyash',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: '' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   css: ['bulma/css/bulma.min.css'],
   plugins: [],
@@ -23,22 +24,28 @@ export default {
           projectId: process.env.FIREBASE_PROJECT_ID,
           storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
           messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-          appId: process.env.FIREBASE_APP_ID,
+          appId: process.env.FIREBASE_APP_ID
         },
         services: {
           firestore: true,
           functions: {
             location: 'us-central1',
             emulatorPort: 5001,
-            emulatorHost: 'http://localhost',
-          },
-        },
-      },
-    ],
+            emulatorHost: 'http://localhost'
+          }
+        }
+      }
+    ]
   ],
   build: {},
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname),
+      '~': path.resolve(__dirname)
+    }
+  },
   env: {
     privateBudget: process.env.PRIVATE_BUDGET,
-    publicBudget: process.env.PUBLIC_BUDGET,
-  },
+    publicBudget: process.env.PUBLIC_BUDGET
+  }
 }

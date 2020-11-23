@@ -77,8 +77,12 @@ export default {
       }
     }
   },
-  mounted() {
-    this.renderChart(this.chartData.data, this.chartData.options)
+  watch: {
+    baseData: {
+      handler() {
+        this.renderChart(this.chartData.data, this.chartData.options)
+      }
+    }
   }
 }
 </script>

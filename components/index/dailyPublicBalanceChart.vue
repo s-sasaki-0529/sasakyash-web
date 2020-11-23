@@ -1,5 +1,5 @@
 <template>
-  <balance-chart title="[公費] 今月の支出状況" :labels="shortDayLabels" :dataSets="dataSets" />
+  <balance-chart title="[公費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
 </template>
 
 <script>
@@ -11,38 +11,27 @@ export default {
   components: { balanceChart },
   async fetch() {
     const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-    this.baseData = await api({ paymentType: 'public' }).then(res => res.data)
+    const apiResponse = await api({ paymentType: 'public' }).then(res => res.data)
+    this.days = apiResponse.days
+    this.amounts = apiResponse.amounts
   },
   data: () => ({
-    baseData: {} // { '2020-10-10': 1000, '2020-10-11: 2000 }
+    days: [],
+    amounts: []
   }),
   computed: {
-    dayLabels() {
-      return Object.keys(this.baseData)
-    },
-    shortDayLabels() {
-      return this.dayLabels.map(dayLabel => dayjs(dayLabel).date())
-    },
     realBalanceValues() {
       const today = dayjs().startOf('day')
       let balance = PUBLIC_BUDGET
 
-      return this.dayLabels.map(dayLabel => {
-        const day = dayjs(dayLabel)
+      return this.days.map((dayStr, idx) => {
+        const day = dayjs(dayStr)
         if (day <= today) {
-          balance -= this.baseData[dayLabel]
+          balance -= this.amounts[idx]
           return balance
         } else {
           return null // 未来はグラフに描画しない
         }
-      })
-    },
-    burndownValues() {
-      const dailyBudget = PUBLIC_BUDGET / this.dayLabels.length
-      let balance = PUBLIC_BUDGET
-      return this.dayLabels.map(v => {
-        balance -= dailyBudget
-        return balance
       })
     },
     dataSets() {

@@ -1,14 +1,14 @@
 <template>
-  <balance-chart title="[私費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
+  <line-chart title="[私費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
 </template>
 
 <script>
-import balanceChart from './balanceChart.vue'
+import LineChart from '@/components/commons/LineChart'
 import { PRIVATE_BUDGET } from '@/commons/constants'
 import dayjs from 'dayjs'
 
 export default {
-  components: { balanceChart },
+  components: { LineChart },
   async fetch() {
     const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
     const apiResponse = await api({ paymentType: 'private' }).then(res => res.data)

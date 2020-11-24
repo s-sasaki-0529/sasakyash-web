@@ -1,6 +1,5 @@
 <script>
 import { Line } from 'vue-chartjs'
-import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '@/commons/constants'
 
 export default {
   extends: Line,

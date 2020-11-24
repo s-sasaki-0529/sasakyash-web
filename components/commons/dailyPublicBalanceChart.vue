@@ -37,10 +37,10 @@ export default {
     dataSets() {
       return [
         {
-          label: '現実',
+          label: '今月',
           data: this.realBalanceValues,
           fill: true,
-          borderColor: 'rgba(239,39,91,0.3)',
+          borderColor: 'rgba(239,39,91,1)',
           backgroundColor: 'rgba(239,39,91,0.3)',
           lineTension: false
         }

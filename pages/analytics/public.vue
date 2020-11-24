@@ -1,9 +1,12 @@
 <template>
-  <div class="analytics-public">公費詳細分析画面</div>
+  <daily-public-balance-chart />
 </template>
 
 <script>
-export default {}
+import dailyPublicBalanceChart from '~/components/commons/dailyPublicBalanceChart.vue'
+export default {
+  components: { dailyPublicBalanceChart }
+}
 </script>
 
 <style lang="scss"></style>

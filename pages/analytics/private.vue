@@ -1,9 +1,12 @@
 <template>
-  <div class="analytics-private">私費詳細分析画面</div>
+  <daily-private-balance-chart />
 </template>
 
 <script>
-export default {}
+import dailyPrivateBalanceChart from '~/components/commons/dailyPrivateBalanceChart.vue'
+export default {
+  components: { dailyPrivateBalanceChart }
+}
 </script>
 
 <style lang="scss"></style>

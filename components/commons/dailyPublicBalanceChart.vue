@@ -1,5 +1,5 @@
 <template>
-  <line-chart title="[公費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
+  <line-chart title="[公費] 今月の支出状況" :labels="formattedDays" :dataSets="dataSets" />
 </template>
 
 <script>
@@ -20,6 +20,9 @@ export default {
     amounts: []
   }),
   computed: {
+    formattedDays() {
+      return this.days.map(day => dayjs(day).format('DD'))
+    },
     realBalanceValues() {
       const today = dayjs().startOf('day')
       let balance = PUBLIC_BUDGET

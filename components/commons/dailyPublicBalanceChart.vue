@@ -43,8 +43,8 @@ export default {
           label: '今月',
           data: this.realBalanceValues,
           fill: true,
-          borderColor: 'rgba(239,39,91,1)',
-          backgroundColor: 'rgba(239,39,91,0.3)',
+          borderColor: 'rgba(239,39,91,0.5)',
+          backgroundColor: 'rgba(239,39,91,0.1)',
           lineTension: false
         }
       ]

@@ -3,16 +3,16 @@
     <div class="column left">
       <div class="title is-4">比較</div>
       <div class="box month-checkbox-list">
-        <div :key="month" v-for="month in allMonthList">
+        <div :key="month.unix()" v-for="month in allMonthDateList">
           <label class="checkbox">
-            <input type="checkbox" :value="month" v-model="selectedMonthList" />
-            {{ month }}
+            <input type="checkbox" :value="month" v-model="selectedMonthDateList" />
+            {{ month.format('YYYY-MM') }}
           </label>
         </div>
       </div>
     </div>
     <div class="column right">
-      <daily-private-balance-chart :compareMonthList="selectedMonthList" :height="500" />
+      <daily-private-balance-chart :monthDateList="[today, ...selectedMonthDateList]" :height="500" />
     </div>
   </div>
 </template>
@@ -23,24 +23,27 @@ import dailyPrivateBalanceChart from '~/components/commons/dailyPrivateBalanceCh
 export default {
   components: { dailyPrivateBalanceChart },
   data: () => ({
-    selectedMonthList: []
+    selectedMonthDateList: []
   }),
   computed: {
-    allMonthList() {
+    today() {
+      return dayjs()
+    },
+    allMonthDateList() {
       const monthList = []
       const fromDate = dayjs('2018-01-01')
       const toDate = dayjs().startOf('month')
       let iteratorDate = dayjs(fromDate)
 
       while (iteratorDate.unix() < toDate.unix()) {
-        monthList.push(iteratorDate.format('YYYY-MM'))
+        monthList.push(dayjs(iteratorDate))
         iteratorDate = iteratorDate.add(1, 'month')
       }
       return monthList.reverse()
     }
   },
   mounted() {
-    this.selectedMonthList = [this.allMonthList[0], this.allMonthList[1]]
+    this.selectedMonthDateList = [this.allMonthDateList[0], this.allMonthDateList[1]]
   }
 }
 </script>

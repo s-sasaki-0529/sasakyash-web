@@ -36,7 +36,7 @@ export default {
           maintainAspectRatio: false,
           scales: {
             xAxes: [{ scaleLabel: { display: true }, ticks: { autoSkip: false } }],
-            yAxes: [{ ticks: { beginAtZero: false } }]
+            yAxes: [{ ticks: { beginAtZero: false, min: 0 } }]
           }
         }
       }

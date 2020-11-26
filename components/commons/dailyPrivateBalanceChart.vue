@@ -1,6 +1,6 @@
 <template>
   <div>
-    <line-chart title="[私費] 今月の支出状況" :labels="formattedDays" :dataSets="dataSets" />
+    <line-chart title="[私費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
   </div>
 </template>
 
@@ -12,28 +12,19 @@ import palette from 'google-palette'
 
 export default {
   components: { LineChart },
-  async fetch() {
-    const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-    const apiResponse = await api({ paymentType: 'private' }).then(res => res.data)
-    this.days = apiResponse.days
-    this.currentMonthAmounts = apiResponse.amounts
-  },
   props: {
-    compareMonthList: {
-      type: Array, // ['2020-10', '2020-11' ...]
+    monthDateList: {
+      type: Array, // dayjs[]
       required: false,
       default: () => []
     }
   },
   data: () => ({
-    days: [],
-    currentMonthAmounts: [],
+    isLoading: true,
+    days: [...new Array(30)].map((_, i) => i + 1),
     compareAmountList: []
   }),
   computed: {
-    formattedDays() {
-      return this.days.map(day => dayjs(day).format('DD'))
-    },
     burndownValues() {
       const dailyBudget = PRIVATE_BUDGET / this.days.length
       let balance = PRIVATE_BUDGET
@@ -42,56 +33,51 @@ export default {
         return balance
       })
     },
-    currentMonthValues() {
-      const today = dayjs().startOf('day')
-      let balance = PRIVATE_BUDGET
-
-      return this.days.map((dayStr, idx) => {
-        const day = dayjs(dayStr)
-        if (day <= today) {
-          balance -= this.currentMonthAmounts[idx]
-          return balance
-        } else {
-          return null // 未来はグラフに描画しない
-        }
-      })
-    },
-    currentMonthDataSet() {
-      return {
-        label: '今月',
-        data: this.currentMonthValues,
-        fill: true,
-        borderColor: 'rgba(130,201,169,1)',
-        backgroundColor: 'rgba(130,201,169,0.3)',
-        lineTension: false
-      }
-    },
     burndownDataSet() {
-      return {
-        label: 'バーンダウン',
-        data: this.burndownValues,
-        fill: false,
-        lineTension: false
-      }
-    },
-    compareDataSets() {
-      const colors = palette('mpn65', this.compareAmountList.length)
-      return this.compareAmountList.map((amounts, idx) => {
-        return {
-          label: this.compareMonthList[idx],
-          data: this.calcBalanceValues(amounts),
-          fill: false,
-          borderColor: '#' + colors[idx],
-          backgroundColor: '#' + colors[idx],
-          lineTension: false
-        }
-      })
+      return this.createCommonDataSet('バーンダウン', this.burndownValues, '#ccc')
     },
     dataSets() {
-      return [this.currentMonthDataSet, this.burndownDataSet, ...this.compareDataSets]
+      if (this.isLoading || this.monthDateList.length != this.compareAmountList.length) return []
+      return [this.burndownDataSet, ...this.createDataSets()]
+    },
+    colors() {
+      return [...palette('cb-Dark2', 8), ...palette('mpn65', this.compareAmountList.length)]
     }
   },
   methods: {
+    createDataSets() {
+      return this.compareAmountList.map((amounts, idx) => {
+        if (idx === 0) {
+          return this.createMainDataSet(amounts)
+        } else {
+          return this.createCommonDataSet(
+            this.monthDateList[idx].format('YYYY-MM'),
+            this.calcBalanceValues(amounts),
+            '#' + this.colors[idx]
+          )
+        }
+      })
+    },
+    createMainDataSet(amounts) {
+      const date = dayjs().date()
+      const mainAmounts = this.calcBalanceValues(amounts).filter((_, idx) => idx < date)
+      return this.createCommonDataSet('今月', mainAmounts, '', {
+        borderColor: 'rgba(70,157,90,0.5)',
+        backgroundColor: 'rgba(70,157,90,0.1)',
+        fill: true
+      })
+    },
+    createCommonDataSet(label, values, color, option = {}) {
+      return {
+        label,
+        data: values,
+        fill: false,
+        borderColor: color,
+        backgroundColor: color,
+        lineTension: false,
+        ...option
+      }
+    },
     calcBalanceValues(amounts) {
       let balance = PRIVATE_BUDGET
       return this.days.map((_, idx) => {
@@ -101,17 +87,26 @@ export default {
     }
   },
   watch: {
-    compareMonthList() {
-      const promiseList = this.compareMonthList.map(yearMonth => {
-        const [year, month] = yearMonth.split('-')
-        const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-        return api({ paymentType: 'private', year, month }).then(res => {
-          return res.data.amounts
+    monthDateList: {
+      handler() {
+        this.isLoading = true
+        const promiseList = this.monthDateList.map(monthDate => {
+          const year = monthDate.year()
+          const month = monthDate.month() + 1
+          const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
+          return api({ paymentType: 'private', year, month }).then(res => {
+            return res.data.amounts
+          })
         })
-      })
-      Promise.all(promiseList).then(amountsList => {
-        this.compareAmountList = amountsList
-      })
+        Promise.all(promiseList)
+          .then(amountsList => {
+            this.compareAmountList = amountsList
+          })
+          .finally(() => {
+            this.isLoading = false
+          })
+      },
+      immediate: true
     }
   }
 }

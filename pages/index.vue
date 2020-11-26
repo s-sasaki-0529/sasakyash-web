@@ -6,14 +6,21 @@
         <daily-public-balance-chart :height="500" />
       </div>
       <div class="column">
-        <daily-private-balance-chart :height="500" />
+        <daily-private-balance-chart :height="500" :monthDateList="[today]" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import dayjs from 'dayjs'
+export default {
+  computed: {
+    today() {
+      return dayjs()
+    }
+  }
+}
 </script>
 
 <style lang="scss"></style>

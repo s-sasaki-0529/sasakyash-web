@@ -3,10 +3,20 @@
     <balance-box />
     <div class="columns">
       <div class="column">
-        <daily-public-balance-chart :height="500" :monthDateList="[today]" />
+        <daily-balance-chart
+          title="[公費] 今月の支出状況"
+          paymentType="public"
+          :monthDateList="[today]"
+          :height="500"
+        />
       </div>
       <div class="column">
-        <daily-private-balance-chart :height="500" :monthDateList="[today]" />
+        <daily-balance-chart
+          title="[私費] 今月の支出状況"
+          paymentType="private"
+          :monthDateList="[today]"
+          :height="500"
+        />
       </div>
     </div>
   </div>
@@ -14,7 +24,9 @@
 
 <script>
 import dayjs from 'dayjs'
+import dailyBalanceChart from '~/components/commons/dailyBalanceChart'
 export default {
+  components: { dailyBalanceChart },
   computed: {
     today() {
       return dayjs()

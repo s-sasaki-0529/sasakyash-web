@@ -1,64 +1,10 @@
 <template>
-  <div class="columns analytics-private">
-    <div class="column left">
-      <div class="title is-4">比較</div>
-      <div class="box month-checkbox-list">
-        <div :key="month.unix()" v-for="month in allMonthDateList">
-          <label class="checkbox">
-            <input type="checkbox" :value="month" v-model="selectedMonthDateList" />
-            {{ month.format('YYYY-MM') }}
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="column right">
-      <daily-private-balance-chart :monthDateList="[today, ...selectedMonthDateList]" :height="500" />
-    </div>
-  </div>
+  <daily-balance-chart-board title="[公費] 今月の支出状況" paymentType="public" />
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import dailyPrivateBalanceChart from '~/components/commons/dailyPrivateBalanceChart.vue'
+import dailyBalanceChartBoard from '~/components/commons/dailyBalanceChartBoard'
 export default {
-  components: { dailyPrivateBalanceChart },
-  data: () => ({
-    selectedMonthDateList: []
-  }),
-  computed: {
-    today() {
-      return dayjs()
-    },
-    allMonthDateList() {
-      const monthList = []
-      const fromDate = dayjs('2018-01-01')
-      const toDate = dayjs().startOf('month')
-      let iteratorDate = dayjs(fromDate)
-
-      while (iteratorDate.unix() < toDate.unix()) {
-        monthList.push(dayjs(iteratorDate))
-        iteratorDate = iteratorDate.add(1, 'month')
-      }
-      return monthList.reverse()
-    }
-  },
-  mounted() {
-    this.selectedMonthDateList = [this.allMonthDateList[0], this.allMonthDateList[1]]
-  }
+  components: { dailyBalanceChartBoard }
 }
 </script>
-
-<style scoped lang="scss">
-.analytics-private {
-  align-items: center;
-
-  .column.left {
-    max-width: 200px;
-    .month-checkbox-list {
-      width: auto;
-      max-height: 350px;
-      overflow: scroll;
-    }
-  }
-}
-</style>

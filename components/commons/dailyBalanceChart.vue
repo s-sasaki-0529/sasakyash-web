@@ -1,18 +1,29 @@
 <template>
   <div>
-    <line-chart title="[私費] 今月の支出状況" :labels="days" :dataSets="dataSets" />
+    <line-chart :title="title" :labels="days" :dataSets="dataSets" />
   </div>
 </template>
 
 <script>
 import LineChart from '@/components/commons/LineChart'
-import { PRIVATE_BUDGET } from '@/commons/constants'
 import dayjs from 'dayjs'
 import palette from 'google-palette'
+import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '~/commons/constants'
 
 export default {
   components: { LineChart },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
+    paymentType: {
+      type: String,
+      required: true,
+      validator(v) {
+        return ['private', 'public'].includes(v)
+      }
+    },
     monthDateList: {
       type: Array, // dayjs[]
       required: false,
@@ -25,20 +36,20 @@ export default {
     compareAmountList: []
   }),
   computed: {
+    budget() {
+      return this.paymentType === 'private' ? PRIVATE_BUDGET : PUBLIC_BUDGET
+    },
     burndownValues() {
-      const dailyBudget = PRIVATE_BUDGET / this.days.length
-      let balance = PRIVATE_BUDGET
+      const dailyBudget = this.budget / this.days.length
+      let balance = this.budget
       return this.days.map(v => {
         balance -= dailyBudget
         return balance
       })
     },
-    burndownDataSet() {
-      return this.createCommonDataSet('バーンダウン', this.burndownValues, '#ccc')
-    },
     dataSets() {
       if (this.isLoading || this.monthDateList.length != this.compareAmountList.length) return []
-      return [this.burndownDataSet, ...this.createDataSets()]
+      return [...this.createDataSets()]
     },
     colors() {
       return [...palette('cb-Dark2', 8), ...palette('mpn65', this.compareAmountList.length)]
@@ -62,8 +73,8 @@ export default {
       const date = dayjs().date()
       const mainAmounts = this.calcBalanceValues(amounts).filter((_, idx) => idx < date)
       return this.createCommonDataSet('今月', mainAmounts, '', {
-        borderColor: 'rgba(70,157,90,0.5)',
-        backgroundColor: 'rgba(70,157,90,0.1)',
+        borderColor: this.paymentType === 'private' ? 'rgba(70,157,90,0.5)' : 'rgba(239,39,91,0.5)',
+        backgroundColor: this.paymentType === 'private' ? 'rgba(70,157,90,0.1)' : 'rgba(239,39,91,0.1)',
         fill: true
       })
     },
@@ -79,7 +90,7 @@ export default {
       }
     },
     calcBalanceValues(amounts) {
-      let balance = PRIVATE_BUDGET
+      let balance = this.budget
       return this.days.map((_, idx) => {
         balance -= amounts[idx]
         return balance
@@ -94,7 +105,7 @@ export default {
           const year = monthDate.year()
           const month = monthDate.month() + 1
           const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-          return api({ paymentType: 'private', year, month }).then(res => {
+          return api({ paymentType: this.paymentType, year, month }).then(res => {
             return res.data.amounts
           })
         })

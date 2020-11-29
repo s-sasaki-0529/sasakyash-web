@@ -1,28 +1,64 @@
 <template>
-  <div>
-    <daily-public-balance-chart />
-    <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">aaaa</section>
-        <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
-        </footer>
+  <div class="columns analytics-private">
+    <div class="column left">
+      <div class="title is-4">比較</div>
+      <div class="box month-checkbox-list">
+        <div :key="month.unix()" v-for="month in allMonthDateList">
+          <label class="checkbox">
+            <input type="checkbox" :value="month" v-model="selectedMonthDateList" />
+            {{ month.format('YYYY-MM') }}
+          </label>
+        </div>
       </div>
+    </div>
+    <div class="column right">
+      <daily-public-balance-chart :monthDateList="[today, ...selectedMonthDateList]" :height="500" />
     </div>
   </div>
 </template>
 
 <script>
-import dailyPublicBalanceChart from '~/components/commons/dailyPublicBalanceChart.vue'
+import dayjs from 'dayjs'
+import DailyPublicBalanceChart from '~/components/commons/dailyPublicBalanceChart.vue'
 export default {
-  components: { dailyPublicBalanceChart }
+  components: { DailyPublicBalanceChart },
+  data: () => ({
+    selectedMonthDateList: []
+  }),
+  computed: {
+    today() {
+      return dayjs()
+    },
+    allMonthDateList() {
+      const monthList = []
+      const fromDate = dayjs('2018-01-01')
+      const toDate = dayjs().startOf('month')
+      let iteratorDate = dayjs(fromDate)
+
+      while (iteratorDate.unix() < toDate.unix()) {
+        monthList.push(dayjs(iteratorDate))
+        iteratorDate = iteratorDate.add(1, 'month')
+      }
+      return monthList.reverse()
+    }
+  },
+  mounted() {
+    this.selectedMonthDateList = [this.allMonthDateList[0], this.allMonthDateList[1]]
+  }
 }
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss">
+.analytics-private {
+  align-items: center;
+
+  .column.left {
+    max-width: 200px;
+    .month-checkbox-list {
+      width: auto;
+      max-height: 350px;
+      overflow: scroll;
+    }
+  }
+}
+</style>

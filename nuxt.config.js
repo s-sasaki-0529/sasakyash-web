@@ -20,21 +20,21 @@ export default {
       {
         config: {
           apiKey: process.env.FIREBASE_APP_KEY,
-          authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-          databaseURL: process.env.FIREBASE_DATABASE_URL,
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-          messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-          appId: process.env.FIREBASE_APP_ID
+          authDomain: 'sasakyash.firebaseapp.com',
+          databaseURL: 'https://sasakyash.firebaseio.com',
+          projectId: 'sasakyash',
+          storageBucket: 'sasakyash.appspot.com',
+          messagingSenderId: '910066656684',
+          appId: '1:910066656684:web:45c9b81da866fdf96b8609'
         },
         services: {
-          firestore: true,
           functions: {
             location: 'us-central1',
             emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : false,
             emulatorHost: process.env.NODE_ENV === 'development' ? 'http://localhost' : false
           }
-        }
+        },
+        onFirebaseHosting: true
       }
     ]
   ],

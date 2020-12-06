@@ -18,7 +18,7 @@ jobs:
       env:
         FIREBASE_APP_KEY: ${{ secrets.FIREBASE_APP_KEY }}
         PUBLIC_BUDGET: ${{ secrets.PUBLIC_BUDGET }}
-        PRIVATE_BUDGET: ${{ secrets.PRIVATE }}
+        PRIVATE_BUDGET: ${{ secrets.PRIVATE_BUDGET }}
       run: NODE_ENV=production yarn build
     - name: Deploy
       run: yarn firebase deploy --token=${{ secrets.FIREBASE_TOKEN }}

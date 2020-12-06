@@ -23,6 +23,11 @@
       <li><nuxt-link to="/forms/payment">クイック入力</nuxt-link></li>
       <li><nuxt-link to="/forms/subscription">サブスクリプション</nuxt-link></li>
     </ul>
+
+    <p class="menu-label">その他</p>
+    <ul class="menu-list">
+      <li><nuxt-link to="/others/setting">設定</nuxt-link></li>
+    </ul>
   </div>
 </template>
 

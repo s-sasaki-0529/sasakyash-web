@@ -1,5 +1,5 @@
 <template>
-  <daily-balance-chart-board title="[公費] 今月の残額遷移" paymentType="public" />
+  <daily-balance-chart-board title="[私費] 今月の残額遷移" paymentType="private" />
 </template>
 
 <script>

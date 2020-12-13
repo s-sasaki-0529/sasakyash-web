@@ -1,5 +1,5 @@
 <template>
-  <div class="list-utilities-expense">水道光熱費</div>
+  <div class="list-utilities-bills">水道光熱費</div>
 </template>
 
 <script>

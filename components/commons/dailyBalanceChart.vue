@@ -32,7 +32,7 @@ export default {
   },
   data: () => ({
     isLoading: true,
-    days: [...new Array(30)].map((_, i) => i + 1),
+    days: [...new Array(31)].map((_, i) => i + 1),
     compareAmountList: []
   }),
   computed: {

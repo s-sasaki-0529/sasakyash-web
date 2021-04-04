@@ -30,7 +30,7 @@ export default {
     bills: {}
   }),
   async mounted() {
-    this.bills = await fetchUtilityBills(this.$fire.functions)
+    this.bills = await fetchUtilityBills()
   }
 }
 </script>

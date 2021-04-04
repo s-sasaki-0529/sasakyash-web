@@ -18,7 +18,7 @@ import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '@/commons/constants'
 
 export default {
   async fetch() {
-    const monthTotalPaymentAmount = await fetchMonthTotalPaymentAmount(this.$fire.functions)
+    const monthTotalPaymentAmount = await fetchMonthTotalPaymentAmount()
     this.privateBalance = PRIVATE_BUDGET - monthTotalPaymentAmount.private
     this.publicBalance = PUBLIC_BUDGET - monthTotalPaymentAmount.public
   },

@@ -63,11 +63,11 @@ export default {
         const promiseList = this.monthDateList.map(monthDate => {
           const year = monthDate.year()
           const month = monthDate.month() + 1
-          return fetchDailyPaymentAmount(this.$fire.functions, this.paymentType, year, month)
+          return fetchDailyPaymentAmount(this.paymentType, year, month)
         })
         Promise.all(promiseList)
           .then(amountsList => {
-            this.compareAmountList = amountsList
+            this.compareAmountList = amountsList.map(al => al.amounts)
           })
           .finally(() => {
             this.isLoading = false

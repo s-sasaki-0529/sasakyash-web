@@ -1,22 +1,7 @@
-import firebase from 'firebase'
-
-type Functions = firebase.functions.Functions
-type PaymentType = 'public' | 'private'
-
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APP_KEY,
-  authDomain: 'sasakyash.firebaseapp.com',
-  databaseURL: 'https://sasakyash.firebaseio.com',
-  projectId: 'sasakyash',
-  storageBucket: 'sasakyash.appspot.com',
-  messagingSenderId: '910066656684',
-  appId: '1:910066656684:web:45c9b81da866fdf96b8609'
-}
-firebase.initializeApp(firebaseConfig)
-
-const functions = firebase.functions()
+import { functions } from '@/commons/firebase'
 
 // FIXME: サーバサイドと型を一元管理する
+type PaymentType = 'public' | 'private'
 type UtilityBills = {
   [date: string]: {
     electric?: number

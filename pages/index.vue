@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <balance-box />
+    <BalanceBox />
     <div class="columns">
       <div class="column">
-        <daily-balance-chart
+        <DailyBalanceChart
           title="[公費] 今月の支出状況"
           payment-type="public"
           :month-date-list="[today]"
@@ -11,7 +11,7 @@
         />
       </div>
       <div class="column">
-        <daily-balance-chart
+        <DailyBalanceChart
           title="[私費] 今月の支出状況"
           payment-type="private"
           :month-date-list="[today]"
@@ -24,10 +24,10 @@
 
 <script>
 import dayjs from 'dayjs'
-import balanceBox from '~/components/organisms/balanceBox'
-import dailyBalanceChart from '~/components/organisms/dailyBalanceChart'
+import BalanceBox from '~/components/organisms/BalanceBox'
+import DailyBalanceChart from '~/components/organisms/DailyBalanceChart'
 export default {
-  components: { balanceBox, dailyBalanceChart },
+  components: { BalanceBox, DailyBalanceChart },
   computed: {
     today() {
       return dayjs()

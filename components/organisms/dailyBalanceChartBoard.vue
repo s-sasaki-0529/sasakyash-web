@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="column right">
-      <daily-balance-chart
+      <DailyBalanceChart
         :title="title"
         :payment-type="paymentType"
         :month-date-list="[today, ...selectedMonthDateList]"
@@ -24,7 +24,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import DailyBalanceChart from '~/components/organisms/dailyBalanceChart.vue'
+import DailyBalanceChart from '~/components/organisms/DailyBalanceChart.vue'
 export default {
   components: { DailyBalanceChart },
   props: {

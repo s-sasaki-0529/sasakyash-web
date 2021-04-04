@@ -1,10 +1,10 @@
 <template>
-  <daily-balance-chart-board title="[公費] 今月の残額遷移" payment-type="public" />
+  <DailyBalanceChartBoard title="[公費] 今月の残額遷移" payment-type="public" />
 </template>
 
 <script>
-import dailyBalanceChartBoard from '~/components/organisms/dailyBalanceChartBoard'
+import DailyBalanceChartBoard from '~/components/organisms/DailyBalanceChartBoard'
 export default {
-  components: { dailyBalanceChartBoard }
+  components: { DailyBalanceChartBoard }
 }
 </script>

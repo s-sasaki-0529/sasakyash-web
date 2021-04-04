@@ -1,6 +1,6 @@
 <template>
   <div>
-    <line-chart :title="title" :labels="days" :data-sets="dataSets" />
+    <LineChart :title="title" :labels="days" :data-sets="dataSets" />
   </div>
 </template>
 

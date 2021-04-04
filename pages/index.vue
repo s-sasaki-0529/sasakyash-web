@@ -24,9 +24,10 @@
 
 <script>
 import dayjs from 'dayjs'
+import balanceBox from '~/components/index/balanceBox'
 import dailyBalanceChart from '~/components/commons/dailyBalanceChart'
 export default {
-  components: { dailyBalanceChart },
+  components: { balanceBox, dailyBalanceChart },
   computed: {
     today() {
       return dayjs()

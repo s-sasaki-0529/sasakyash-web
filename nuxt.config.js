@@ -14,30 +14,7 @@ export default {
   plugins: [],
   components: true,
   buildModules: ['@nuxt/typescript-build'],
-  modules: [
-    [
-      '@nuxtjs/firebase',
-      {
-        config: {
-          apiKey: process.env.FIREBASE_APP_KEY,
-          authDomain: 'sasakyash.firebaseapp.com',
-          databaseURL: 'https://sasakyash.firebaseio.com',
-          projectId: 'sasakyash',
-          storageBucket: 'sasakyash.appspot.com',
-          messagingSenderId: '910066656684',
-          appId: '1:910066656684:web:45c9b81da866fdf96b8609'
-        },
-        services: {
-          functions: {
-            location: 'us-central1',
-            emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : false,
-            emulatorHost: process.env.NODE_ENV === 'development' ? 'http://localhost' : false
-          }
-        },
-        onFirebaseHosting: true
-      }
-    ]
-  ],
+  modules: [],
   build: {},
   resolve: {
     alias: {

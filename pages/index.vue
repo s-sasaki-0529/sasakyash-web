@@ -24,8 +24,8 @@
 
 <script>
 import dayjs from 'dayjs'
-import balanceBox from '~/components/index/balanceBox'
-import dailyBalanceChart from '~/components/commons/dailyBalanceChart'
+import balanceBox from '~/components/organisms/balanceBox'
+import dailyBalanceChart from '~/components/organisms/dailyBalanceChart'
 export default {
   components: { balanceBox, dailyBalanceChart },
   computed: {

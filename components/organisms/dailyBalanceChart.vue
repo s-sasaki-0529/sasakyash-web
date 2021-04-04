@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LineChart from '@/components/commons/LineChart'
+import LineChart from '@/components/atoms/LineChart'
 import dayjs from 'dayjs'
 import palette from 'google-palette'
 import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '~/commons/constants'

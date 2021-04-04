@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import dailyBalanceChartBoard from '~/components/commons/dailyBalanceChartBoard'
+import dailyBalanceChartBoard from '~/components/organisms/dailyBalanceChartBoard'
 export default {
   components: { dailyBalanceChartBoard }
 }

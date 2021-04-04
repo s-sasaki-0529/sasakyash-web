@@ -24,7 +24,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import DailyBalanceChart from '~/components/commons/dailyBalanceChart.vue'
+import DailyBalanceChart from '~/components/organisms/dailyBalanceChart.vue'
 export default {
   components: { DailyBalanceChart },
   props: {

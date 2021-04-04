@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr :key="date" v-for="date in Object.keys(bills)">
+          <tr v-for="date in Object.keys(bills)" :key="date">
             <td>{{ date }}</td>
             <td>{{ bills[date].electric || '-' }}</td>
             <td>{{ bills[date].gas || '-' }}</td>

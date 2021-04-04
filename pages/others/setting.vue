@@ -1,6 +1,6 @@
 <template>
   <div class="others-setting">
-    <button @click="requestClearCache" class="button is-danger is-light">キャッシュを破棄する</button>
+    <button class="button is-danger is-light" @click="requestClearCache">キャッシュを破棄する</button>
   </div>
 </template>
 

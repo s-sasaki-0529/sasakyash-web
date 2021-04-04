@@ -40,5 +40,21 @@
     "trailingComma": "none",
     "printWidth": 110,
     "arrowParens": "avoid"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "@nuxtjs/eslint-config-typescript",
+      "plugin:nuxt/recommended",
+      "prettier",
+      "prettier/vue",
+      "plugin:prettier/recommended",
+      "plugin:nuxt/recommended"
+    ],
+    "plugins": ["prettier"]
   }
 }

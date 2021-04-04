@@ -1,6 +1,6 @@
 <template>
   <div>
-    <line-chart :title="title" :labels="days" :dataSets="dataSets" />
+    <line-chart :title="title" :labels="days" :data-sets="dataSets" />
   </div>
 </template>
 
@@ -42,17 +42,40 @@ export default {
     burndownValues() {
       const dailyBudget = this.budget / this.days.length
       let balance = this.budget
-      return this.days.map(v => {
+      return this.days.map(_ => {
         balance -= dailyBudget
         return balance
       })
     },
     dataSets() {
-      if (this.isLoading || this.monthDateList.length != this.compareAmountList.length) return []
+      if (this.isLoading || this.monthDateList.length !== this.compareAmountList.length) return []
       return [...this.createDataSets()]
     },
     colors() {
       return [...palette('cb-Dark2', 8), ...palette('mpn65', this.compareAmountList.length)]
+    }
+  },
+  watch: {
+    monthDateList: {
+      handler() {
+        this.isLoading = true
+        const promiseList = this.monthDateList.map(monthDate => {
+          const year = monthDate.year()
+          const month = monthDate.month() + 1
+          const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
+          return api({ paymentType: this.paymentType, year, month }).then(res => {
+            return res.data.amounts
+          })
+        })
+        Promise.all(promiseList)
+          .then(amountsList => {
+            this.compareAmountList = amountsList
+          })
+          .finally(() => {
+            this.isLoading = false
+          })
+      },
+      immediate: true
     }
   },
   methods: {
@@ -95,29 +118,6 @@ export default {
         balance -= amounts[idx]
         return balance
       })
-    }
-  },
-  watch: {
-    monthDateList: {
-      handler() {
-        this.isLoading = true
-        const promiseList = this.monthDateList.map(monthDate => {
-          const year = monthDate.year()
-          const month = monthDate.month() + 1
-          const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-          return api({ paymentType: this.paymentType, year, month }).then(res => {
-            return res.data.amounts
-          })
-        })
-        Promise.all(promiseList)
-          .then(amountsList => {
-            this.compareAmountList = amountsList
-          })
-          .finally(() => {
-            this.isLoading = false
-          })
-      },
-      immediate: true
     }
   }
 }

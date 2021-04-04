@@ -3,9 +3,9 @@
     <div class="column left">
       <div class="title is-4">比較</div>
       <div class="box month-checkbox-list">
-        <div :key="month.unix()" v-for="month in allMonthDateList">
+        <div v-for="month in allMonthDateList" :key="month.unix()">
           <label class="checkbox">
-            <input type="checkbox" :value="month" v-model="selectedMonthDateList" />
+            <input v-model="selectedMonthDateList" type="checkbox" :value="month" />
             {{ month.format('YYYY-MM') }}
           </label>
         </div>
@@ -14,8 +14,8 @@
     <div class="column right">
       <daily-balance-chart
         :title="title"
-        :paymentType="paymentType"
-        :monthDateList="[today, ...selectedMonthDateList]"
+        :payment-type="paymentType"
+        :month-date-list="[today, ...selectedMonthDateList]"
         :height="500"
       />
     </div>

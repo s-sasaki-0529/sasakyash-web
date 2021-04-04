@@ -24,15 +24,13 @@
 </template>
 
 <script>
+import { fetchUtilityBills } from '@/commons/http'
 export default {
   data: () => ({
     bills: {}
   }),
-  mounted() {
-    const api = this.$fire.functions.httpsCallable('utilityBills')
-    return api().then(res => {
-      this.bills = res.data
-    })
+  async mounted() {
+    this.bills = await fetchUtilityBills(this.$fire.functions)
   }
 }
 </script>

@@ -5,17 +5,16 @@
 </template>
 
 <script>
+import { fetchClearCache } from '@/commons/http'
 export default {
   methods: {
     requestClearCache() {
       if (this.$nuxt.$loading.get() > 0) return
 
       this.$nuxt.$loading.start()
-      this.$fire.functions
-        .httpsCallable('clearCache')()
-        .finally(() => {
-          this.$nuxt.$loading.finish()
-        })
+      fetchClearCache().finally(() => {
+        this.$nuxt.$loading.finish()
+      })
     }
   }
 }

@@ -8,6 +8,7 @@
 import LineChart from '@/components/atoms/LineChart'
 import dayjs from 'dayjs'
 import palette from 'google-palette'
+import { fetchDailyPaymentAmount } from '@/commons/http'
 import { PRIVATE_BUDGET, PUBLIC_BUDGET } from '~/commons/constants'
 
 export default {
@@ -62,10 +63,7 @@ export default {
         const promiseList = this.monthDateList.map(monthDate => {
           const year = monthDate.year()
           const month = monthDate.month() + 1
-          const api = this.$fire.functions.httpsCallable('dailyPaymentAmounts')
-          return api({ paymentType: this.paymentType, year, month }).then(res => {
-            return res.data.amounts
-          })
+          return fetchDailyPaymentAmount(this.$fire.functions, this.paymentType, year, month)
         })
         Promise.all(promiseList)
           .then(amountsList => {

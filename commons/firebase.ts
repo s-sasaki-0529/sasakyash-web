@@ -10,4 +10,9 @@ firebase.initializeApp({
   appId: '1:910066656684:web:45c9b81da866fdf96b8609'
 })
 
-export const functions = firebase.functions()
+const functions = firebase.functions()
+if (process.env.NODE_ENV === 'development') {
+  functions.useEmulator('localhost', 5001)
+}
+
+export { functions }
